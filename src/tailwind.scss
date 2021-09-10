@@ -1,0 +1,343 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.reset {
+  html {
+    box-sizing: content-box;
+  }
+
+  body {
+    margin: 8px;
+    line-height: normal;
+  }
+
+  .quote{
+    @apply bg-blue-100 border-l-4 border-blue-500 pl-5 py-2 flex flex-col gap-2;
+    .text{
+      @apply text-xl;
+    }
+    .author{
+      @apply italic font-medium;
+    }
+  }
+
+  .warning{
+    @apply bg-yellow-100 border-l-4 border-yellow-500 pl-5 py-2 flex flex-col gap-2;
+    .upper{
+      @apply flex gap-1 text-xl font-semibold;
+    }
+  }
+
+  p a{
+    text-decoration: none;
+    color: #121314;
+    position: relative;
+
+    &::after{
+      content: '';
+      position: absolute;
+      z-index: 1;
+      top: 70%;
+      left: -0.1em;
+      right: -0.1em;
+      bottom: 0;
+      transition: top 200ms cubic-bezier(0, 0.8, 0.13, 1);
+      background-color: rgba(128, 89, 201, 0.445);
+    }
+
+    &:hover::after{
+      top: 0;
+    }
+  }  
+
+  figure.img{
+    @apply flex flex-col gap-2 items-center;
+    img{
+      @apply w-96 rounded-md;
+    }
+    figcaption{
+      @apply italic;
+    }
+  }
+
+  .checklist-item , .list-item{
+    @apply list-none flex gap-1 items-center;
+  }
+
+  .inline-code{
+    @apply text-sm;
+  }
+
+  q {
+    quotes: "“" "”" "‘" "’";
+
+    &:before {
+      content: open-quote;
+    }
+
+    &:after {
+      content: close-quote;
+    }
+  }
+
+  hr {
+    border: 1px inset;
+    box-sizing: border-box;
+    margin: 0.5em auto;
+  }
+
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+
+  h3 {
+    font-size: 1.17em;
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size: 1em;
+    font-weight: bold;
+  }
+
+  h5 {
+    font-size: 0.83em;
+    font-weight: bold;
+  }
+
+  h6 {
+    font-size: 0.67em;
+    font-weight: bold;
+  }
+
+  article,
+  aside,
+  nav,
+  section {
+    h1 {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin: 0.83em 0;
+    }
+
+    article,
+    aside,
+    nav,
+    section {
+      h1 {
+        font-size: 1.17em;
+        font-weight: bold;
+        margin: 1em 0;
+      }
+
+      article,
+      aside,
+      nav,
+      section {
+        h1 {
+          font-size: 1em;
+          font-weight: bold;
+          margin: 1.33em 0;
+        }
+
+        article,
+        aside,
+        nav,
+        section {
+          h1 {
+            font-size: 0.83em;
+            font-weight: bold;
+            margin: 1.67em 0;
+          }
+
+          article,
+          aside,
+          nav,
+          section {
+            h1 {
+              font-size: 0.67em;
+              font-weight: bold;
+              margin: 2.33em 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  table {
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: gray;
+  }
+
+  thead,
+  tbody,
+  tfoot,
+  tr {
+    border-color: inherit;
+    vertical-align: middle;
+  }
+
+  td,
+  th {
+    padding: 1px;
+    vertical-align: inherit;
+  }
+
+  th {
+    font-weight: bold;
+  }
+
+  caption {
+    text-align: center;
+  }
+
+  ol {
+    list-style-type: decimal;
+    margin: 1em 0;
+    padding: 0 0 0 40px;
+  }
+
+  ul,
+  ol {
+    ul {
+      list-style-type: circle;
+    }
+
+    ul,
+    ol {
+      ul {
+        list-style-type: square;
+      }
+    }
+  }
+
+  dd {
+    margin: 0 0 0 40px;
+  }
+
+  dl {
+    margin: 1em 0;
+  }
+
+  ul,
+  ol,
+  menu,
+  dl {
+    ul,
+    ol,
+    menu,
+    dl {
+      margin: 0;
+    }
+  }
+
+  legend {
+    padding: 0 2px;
+  }
+
+  fieldset {
+    border-style: groove;
+    border-width: 2px;
+    border: 2px groove ThreeDFace;
+    margin: 0 2px;
+    padding: 0 2px 3px;
+    -webkit-padding-before: 0.35em;
+    -webkit-padding-start: 0.75em;
+    -webkit-padding-end: 0.75em;
+    -webkit-padding-after: 0.625em;
+  }
+
+  ins {
+    background-color: transparent;
+    font-weight: inherit;
+    text-decoration: underline;
+  }
+
+  b,
+  strong {
+    font-weight: bold;
+  }
+
+  i,
+  cite,
+  em,
+  var,
+  address,
+  dfn {
+    font-style: italic;
+    font-weight: inherit;
+  }
+
+  abbr[title],
+  dfn[title] {
+    border-bottom: 0;
+    cursor: default;
+    font-weight: inherit;
+  }
+
+  tt,
+  code,
+  kbd,
+  samp {
+    font-family: monospace;
+    font-weight: inherit;
+  }
+
+  pre {
+    font-family: monospace;
+    margin: 1em 0;
+    white-space: pre;
+  }
+
+  mark {
+    @apply px-3 py-1 bg-yellow-200 rounded-md;
+  }
+
+  big {
+    font-size: larger;
+    font-weight: inherit;
+  }
+
+  small {
+    font-size: smaller;
+    font-weight: inherit;
+  }
+
+  sub,
+  sup {
+    font-weight: inherit;
+    line-height: inherit;
+    position: static;
+  }
+
+  sub {
+    font-size: smaller;
+    bottom: 0;
+    vertical-align: sub;
+  }
+
+  sup {
+    font-size: smaller;
+    top: 0;
+    vertical-align: super;
+  }
+
+  ruby {
+    > rt {
+      font-size: 50%;
+    }
+  }
+
+  iframe {
+    border: 2px inset;
+  }
+}

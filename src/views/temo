@@ -1,0 +1,20 @@
+<p class="text-xl" v-if="section.type == 'paragraph'" v-html="section.data.text"></p>
+          <h1 class="text-5xl font-bold" v-if="section.type == 'header' && section.data.level == 1" v-html="section.data.text"></h1>
+          <h2 class="text-4xl font-bold" v-if="section.type == 'header' && section.data.level == 2" v-html="section.data.text"></h2>
+          <h3 class="text-3xl font-bold" v-if="section.type == 'header' && section.data.level == 3" v-html="section.data.text"></h3>
+          <h4 class="text-2xl font-bold" v-if="section.type == 'header' && section.data.level == 4" v-html="section.data.text"></h4>
+          <h5 class="text-xl font-bold" v-if="section.type == 'header' && section.data.level == 5" v-html="section.data.text"></h5>
+          <h6 class="text-lg font-bold" v-if="section.type == 'header' && section.data.level == 6" v-html="section.data.text"></h6>
+          <ul class="flex gap-2 transform translate-x-4 items-center" v-if="section.type=='list' && section.data.style == 'unordered'" v-for="item in section.data.items">
+              <img class="w-2" src="../assets/list.svg" alt="">
+              <li>{{item}}</li>
+          </ul>
+          <div class="bg-yellow-200 opacity-80 px-7 py-3 flex flex-col gap-2 rounded-md text-yellow-600" v-if="section.type == 'warning'">
+              <div class="flex gap-3">
+                  <img src="../assets/warning.svg" class="w-7 items-center" alt="">
+                  <h2 class="text-3xl font-medium">{{section.data.title}}</h2>
+              </div>
+              <hr class="border-yellow-600">
+              <p class = "text-lg">{{section.data.message}}</p>
+          </div>
+          {{section}}
