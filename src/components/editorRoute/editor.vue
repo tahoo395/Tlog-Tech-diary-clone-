@@ -11,7 +11,7 @@ import list from "@editorjs/list";
 import checklist from "@editorjs/checklist";
 import quote from "@editorjs/quote";
 import warning from "@editorjs/warning";
-import codeBox from "@bomdi/codebox";
+import "./code";
 import table from "@editorjs/table";
 
 import underline from "@editorjs/underline";
@@ -19,6 +19,7 @@ import inlineCode from "@editorjs/inline-code";
 import marker from "@editorjs/marker";
 
 export default {
+  props : {text : {default : {}}},
   data() {
     return {
         editor: null,
@@ -41,21 +42,14 @@ export default {
         checklist,
         quote,
         warning,
-        codeBox: {
-          class: codeBox,
-          config: {
-            themeURL:
-              "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/dracula.min.css", // Optional
-            themeName: "atom-one-dark", // Optional
-            useDefaultTheme: "dark", // Optional. This also determines the background color of the language select drop-down
-          },
-        },
+        CodeTool,
         table,
         underline,
         inlineCode,
         marker,
       },
       placeholder: "Yeah, I'm unstoppable today 💪",
+      data : this.text,
     });
     this.editor = editor
   },
@@ -64,7 +58,7 @@ export default {
       let data = await this.editor.save()
       return data.blocks
     }
-  }
+  },
 };
 </script>
 

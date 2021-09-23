@@ -18,7 +18,22 @@
       z-50
     "
   >
-    <button @click="$emit('close')" class="close absolute top-2 right-3 px-2 py-1 bg-red-600 opacity-70 rounded-md">X</button>
+    <button
+      @click="$emit('close')"
+      class="
+        close
+        absolute
+        top-2
+        right-3
+        px-2
+        py-1
+        bg-red-600
+        opacity-70
+        rounded-md
+      "
+    >
+      X
+    </button>
     <label class="text-xl">Tags</label>
 
     <div
@@ -39,7 +54,7 @@
         v-for="(tag, tagIndex) in tags"
       >
         {{ tag }}
-        <button @click="removeTag(tagIndex)" class="text-red-500">x</button>
+        <button @click="removeTagByclick(tagIndex)" class="text-red-500">x</button>
       </div>
       <input
         type="text"
@@ -54,14 +69,20 @@
       />
     </div>
 
-    <button @click="addTag($event);$emit('done', tags)" class="button bg-green-300">
+    <button
+      @click="
+        addTag($event);
+        $emit('done', tags);
+      "
+      class="button bg-green-300"
+    >
       Done
     </button>
   </div>
 </template>
 
 <script>
-import imageUpload from "./imageUpload.vue";
+import imageUpload from "./coverUpload.vue";
 
 export default {
   data() {
@@ -85,6 +106,9 @@ export default {
       pastedText.split(",").forEach((text) => {
         this.tags.push(text.trim().replace(" ", "-"));
       });
+    },
+    removeTagByclick(tagIndex) {
+      this.tags.splice(tagIndex, 1);
     },
     removeTag(event, tagIndex) {
       if (!event.target.value) {

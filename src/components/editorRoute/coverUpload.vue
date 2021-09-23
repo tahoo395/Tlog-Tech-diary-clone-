@@ -41,7 +41,7 @@ export default {
         const formData = new FormData();
         formData.append("image", this.$refs.file.files[0]);
         this.coverName = "waitin.....";
-        let cover = await api().post("/upload", formData, {
+        let cover = await api().post("/upload/cover", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

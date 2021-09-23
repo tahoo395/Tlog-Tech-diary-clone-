@@ -67,9 +67,9 @@
       <div class="content flex flex-col gap-5">
         <coverUpload @upload="upload"></coverUpload>
         <input type="text" placeholder="Start with Title 😀" v-model="blogTitle" class="blogTitle text-3xl focus:outline-none w-full bg-transparent" />
-        <editor ref="editor"></editor>
+        <editor v-if="textLoaded" :text="blog" ref="editor"></editor>
       </div>
-      <settings-modal @close="showSettings = false" v-show="showSettings" @done="getTags"></settings-modal>
+      <settings-modal ref="settings" @close="showSettings = false" v-show="showSettings" @done="getTags"></settings-modal>
     </div>
   </div>
   <div
@@ -92,9 +92,10 @@
 import editor from "../components/editorRoute/editor.vue";
 import settingsModal from "../components/editorRoute/settings-modal.vue";
 import coverUpload from "../components/editorRoute/coverUpload.vue";
-import { mapActions } from "vuex";
+import { mapActions , mapState } from "vuex";
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
+import api from "../api";
 
 export default {
   data() {
@@ -105,9 +106,15 @@ export default {
       showError: false,
       tags: [],
       coverUrl: "",
-      saveErr : ""
+      saveErr : "",
+      username: this.$route.params.user,
+      blogTitle: this.$route.params.blog.split("_")[0].replace("%20", " "),
+      blogId: this.$route.params.blog.split("_")[1],
+      blog : {},
+      textLoaded : false,
     };
   },
+  computed : mapState(["user"]),
   components: { editor, settingsModal , coverUpload},
   mounted() {
     this.isMobile = window.innerWidth < 650;
@@ -116,7 +123,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["redirectUser" , "postBlog"]),
+    ...mapActions(["redirectUser" , "getBlog" , "postBlog"]),
     async save() {
       let blogText = await this.$refs.editor.save();
 
@@ -133,14 +140,16 @@ export default {
         this.toast('danger' , 'Blog tags are required . It will rank your blogs better.')
       }
       else{
-        let blog = await this.postBlog({
+        await this.postBlog({
           blog : blogText,
           blogCover: this.coverUrl,
           blogTitle: this.blogTitle,
           tags: this.tags,
+          edit: true,
+          blogId : this.blogId,
         })
 
-        this.$router.push(`/blog/${blog.user.username}/${blog.blogTitle}_${blog.blogId}`)
+        this.$router.push(`/blog/${this.user.username}/${this.blogTitle}_${this.blogId}`)
       }
     },
     getTags(tags) {
@@ -164,8 +173,15 @@ export default {
       })
     }
   },
-  created() {
+  async created() {
     this.redirectUser();
+    let blogData = await this.getBlog({user : this.username , blog : `${this.blogTitle}_${this.blogId}` , edit : true})
+    this.blog = {time : blogData.publishTime , blocks : blogData.blog , version : "2.22.2"}
+    this.toast('success' , "Cover was uploaded ! But the name wasn't saved")
+    this.tags = blogData.tags
+    this.$refs.settings.tags = blogData.tags
+    this.coverUrl = blogData.blogCover
+    this.textLoaded = true
   },
 };
 </script>
