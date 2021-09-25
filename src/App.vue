@@ -39,12 +39,15 @@
             rounded-lg
             focus:outline-none
           "
+          v-model="searchText"
+          @keypress.enter="search"
         />
         <svg
           width="20"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
+          @click="search"
           class="
             absolute
             top-0
@@ -63,7 +66,7 @@
           ></path>
         </svg>
       </div>
-      <div class="md:hidden cursor-pointer" @click="showSearch = !showSearch">
+      <div class="md:hidden cursor-pointer" @click="showSearch = !showSearch;search()">
         <svg
           width="20"
           xmlns="http://www.w3.org/2000/svg"
@@ -98,6 +101,8 @@
           transition-all
           duration-300
         "
+        v-if="isMobile"
+        v-model="searchText"
         :class="{
           'translate-y-10': showSearch,
           '-translate-y-14': !showSearch,
@@ -208,7 +213,22 @@ export default {
   data() {
     return {
       showSearch:false,
+      searchText : '',
+      isMobile : false,
     }
+  },
+  methods:{
+    search(){
+      if(this.searchText){
+        location.assign(`/search?q=${this.searchText}`)
+      }
+    }
+  },
+  mounted() {
+    this.isMobile = window.innerWidth < 768;
+    window.addEventListener("resize",() => {
+      this.isMobile = window.innerWidth < 768;
+    })
   }
 }
 </script>
